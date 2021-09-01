@@ -1,0 +1,53 @@
+name: notas
+description: An application to save notes on your phone.
+author: Ana Laura Caballero Pérez
+email: anacaballero1098@gmail.com
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  # Service locator
+  get_it: ^3.1.0
+  # Provider for handle the state
+  provider: ^4.3.2+2
+  # Value equality
+  equatable: ^1.0.1
+  # Functional programming thingies
+  dartz: ^0.8.9
+  # Local cache
+  hive: ^1.4.4
+  # For OS-specific directory paths
+  path_provider: ^1.6.28
+  # Launcher app icon
+  flutter_launcher_icons: ^0.8.1
+  # Notifications
+  awesome_notifications: ^0.0.5+5
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  hive_generator: ^0.8.2
+  build_runner:
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icon.png"
+
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+
+# The following section is specific to Flutter.
+flutter:
+
+  # The following line ensures that the Material Icons font is
+  # included with your application, so that you can use the icons in
+  # the material Icons class.
+  uses-material-design: true
+
+  assets:
+    - assets/
