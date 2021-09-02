@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:notas/features/core/notifications/notifications.dart';
+import 'package:notas/core/notifications/notifications.dart';
 import 'package:notas/features/notes/domain/entities/note.dart';
 import 'package:notas/features/notes/domain/repositories/note_repository_abstract.dart';
 

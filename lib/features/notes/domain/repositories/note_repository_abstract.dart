@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:notas/features/core/error/failures.dart';
+import 'package:notas/core/error/failures.dart';
 import 'package:notas/features/notes/domain/entities/note.dart';
 
 abstract class NoteRepository {

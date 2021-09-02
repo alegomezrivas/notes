@@ -1,5 +1,5 @@
 import 'package:hive/hive.dart';
-import 'package:notas/features/core/error/exceptions.dart';
+import 'package:notas/core/error/exceptions.dart';
 import 'package:notas/features/notes/domain/entities/note.dart';
 
 abstract class NoteLocalDataSource {
