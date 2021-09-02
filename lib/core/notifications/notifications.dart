@@ -1,6 +1,5 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:notas/core/utils/utilities.dart';
-import 'package:meta/meta.dart';
 
 enum Status { add, remove, error }
 
@@ -38,7 +37,7 @@ Future<void> createNoteNotification(Status status) async {
   });
 }
 
-Future<void> noteNotification({@required String title, String body}) async {
+Future<void> noteNotification({required String title, String? body}) async {
   await AwesomeNotifications().createNotification(
     content: NotificationContent(
       id: createUniqueId(),

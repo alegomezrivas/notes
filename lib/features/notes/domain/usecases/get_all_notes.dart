@@ -7,10 +7,10 @@ import 'package:notas/features/notes/domain/repositories/note_repository_abstrac
 class GetAllNotes implements UseCase<List<Note>, NoParams> {
   GetAllNotes(this.repository);
 
-  final NoteRepository repository;
+  final NoteRepository? repository;
 
   @override
   Future<Either<Failure, List<Note>>> call(NoParams params) async {
-    return await repository.getAllNotes();
+    return await repository!.getAllNotes();
   }
 }

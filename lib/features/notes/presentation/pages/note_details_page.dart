@@ -4,13 +4,13 @@ import 'package:notas/features/notes/presentation/provider/note_provider.dart';
 import 'package:provider/provider.dart';
 
 class NoteDetailsPage extends StatefulWidget {
-  final Note note;
-  final int index;
+  final Note? note;
+  final int? index;
   final bool isNotEmpty;
 
   const NoteDetailsPage({
-    Key key,
-    @required this.isNotEmpty,
+    Key? key,
+    required this.isNotEmpty,
     this.note,
     this.index,
   }) : super(key: key);
@@ -19,7 +19,7 @@ class NoteDetailsPage extends StatefulWidget {
 }
 
 class _NoteDetailsPageState extends State<NoteDetailsPage> {
-  final _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _title = TextEditingController();
   final TextEditingController _content = TextEditingController();
 
@@ -27,8 +27,8 @@ class _NoteDetailsPageState extends State<NoteDetailsPage> {
   void initState() {
     super.initState();
     if (widget.isNotEmpty) {
-      _title.text = widget?.note?.title ?? '';
-      _content.text = widget?.note?.content ?? '';
+      _title.text = widget.note?.title ?? '';
+      _content.text = widget.note?.content ?? '';
     }
   }
 
@@ -40,7 +40,7 @@ class _NoteDetailsPageState extends State<NoteDetailsPage> {
   }
 
   void validate(NoteProvider provider) {
-    _formKey.currentState.save();
+    _formKey.currentState!.save();
     FocusScope.of(context).unfocus();
     final note = Note(title: _title.text, content: _content.text);
     if (widget.isNotEmpty) {
@@ -96,7 +96,7 @@ class _NoteDetailsPageState extends State<NoteDetailsPage> {
                     ),
                   ),
                   textInputAction: TextInputAction.next,
-                  onSaved: (value) => _title.text = value,
+                  onSaved: (value) => _title.text = value!,
                 ),
                 SizedBox(height: 16.0),
                 TextFormField(
@@ -112,7 +112,7 @@ class _NoteDetailsPageState extends State<NoteDetailsPage> {
                   ),
                   decoration: InputDecoration.collapsed(hintText: ''),
                   maxLines: 50,
-                  onSaved: (value) => _content.text = value,
+                  onSaved: (value) => _content.text = value!,
                 ),
               ],
             ),

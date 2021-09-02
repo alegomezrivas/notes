@@ -6,13 +6,13 @@ import 'package:notas/features/notes/domain/repositories/note_repository_abstrac
 class NoteProvider with ChangeNotifier {
   NoteProvider({this.repository});
 
-  final NoteRepository repository;
+  final NoteRepository? repository;
 
   bool _isLoading = false;
   List<Note> _notes = [];
-  Note _note;
+  Note? _note;
 
-  get isLoading => _isLoading;
+  bool get isLoading => _isLoading;
 
   set isLoading(bool value) {
     _isLoading = value;
@@ -26,17 +26,17 @@ class NoteProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Note get note => _note;
+  Note? get note => _note;
 
-  set note(Note value) {
+  set note(Note? value) {
     _note = value;
     notifyListeners();
   }
 
   Future<void> addNotes(Note note) async {
-    if (note.title.isNotEmpty || note.content.isNotEmpty) {
+    if (note.title!.isNotEmpty || note.content!.isNotEmpty) {
       isLoading = true;
-      final result = await repository.addNote(note);
+      final result = await repository!.addNote(note);
       isLoading = false;
       result.fold(
         (_) {
@@ -51,9 +51,9 @@ class NoteProvider with ChangeNotifier {
     }
   }
 
-  Future<void> editNotes(int index, Note note) async {
+  Future<void> editNotes(int? index, Note note) async {
     isLoading = true;
-    final result = await repository.editNote(index, note);
+    final result = await repository!.editNote(index, note);
     isLoading = false;
     result.fold(
       (_) {
@@ -68,7 +68,7 @@ class NoteProvider with ChangeNotifier {
 
   Future<void> deleteNotes(int index) async {
     isLoading = true;
-    final result = await repository.deleteNote(index);
+    final result = await repository!.deleteNote(index);
     isLoading = false;
     result.fold(
       (_) {
@@ -84,7 +84,7 @@ class NoteProvider with ChangeNotifier {
 
   Future<void> getAllNotes() async {
     isLoading = true;
-    final result = await repository.getAllNotes();
+    final result = await repository!.getAllNotes();
     isLoading = false;
     result.fold(
       (_) {

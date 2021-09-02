@@ -4,11 +4,8 @@ import 'package:notas/features/notes/presentation/pages/note_details_page.dart';
 import 'package:notas/features/notes/presentation/provider/note_provider.dart';
 
 class NoteBuildListView extends StatelessWidget {
-  final GlobalKey<ScaffoldState> scaffoldKey;
   final NoteProvider provider;
-  const NoteBuildListView(
-      {Key key, @required this.provider, @required this.scaffoldKey})
-      : super(key: key);
+  const NoteBuildListView({Key? key, required this.provider}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -49,11 +46,11 @@ class NoteBuildListView extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Visibility(
-                      visible: note.title.isNotEmpty,
+                      visible: note.title!.isNotEmpty,
                       child: Expanded(
                         flex: 1,
                         child: Text(
-                          note.title,
+                          note.title!,
                           style: TextStyle(
                             fontWeight: FontWeight.w800,
                             fontSize: 18,
@@ -67,7 +64,7 @@ class NoteBuildListView extends StatelessWidget {
                     Expanded(
                       flex: 5,
                       child: Text(
-                        note.content,
+                        note.content!,
                         style: TextStyle(
                           color: Colors.grey,
                           fontWeight: FontWeight.w800,
@@ -101,7 +98,8 @@ class NoteBuildListView extends StatelessWidget {
                             );
                             // Find the ScaffoldMessenger in the widget tree
                             // and use it to show a SnackBar.
-                            scaffoldKey.currentState.showSnackBar(snackBar);
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBar);
                           },
                           child: Icon(
                             Icons.delete,

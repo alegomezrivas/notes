@@ -8,7 +8,7 @@ abstract class NoteLocalDataSource {
   /// Throws [CacheException] if no cached data is present.
   Future<void> addNote(Note note);
 
-  Future<void> editNote(int index, Note note);
+  Future<void> editNote(int? index, Note note);
 
   Future<void> deleteNote(int index);
 
@@ -18,12 +18,12 @@ abstract class NoteLocalDataSource {
 class NoteLocalDataSourceImpl extends NoteLocalDataSource {
   NoteLocalDataSourceImpl({this.hive});
 
-  final Box<Note> hive;
+  final Box<Note>? hive;
 
   @override
   Future<void> addNote(Note note) async {
     try {
-      await hive.add(note);
+      await hive!.add(note);
     } catch (_) {
       throw CacheException();
     }
@@ -32,16 +32,16 @@ class NoteLocalDataSourceImpl extends NoteLocalDataSource {
   @override
   Future<void> deleteNote(int index) async {
     try {
-      await hive.deleteAt(index);
+      await hive!.deleteAt(index);
     } catch (_) {
       throw CacheException();
     }
   }
 
   @override
-  Future<void> editNote(int index, Note note) async {
+  Future<void> editNote(int? index, Note note) async {
     try {
-      hive.putAt(index, note);
+      hive!.putAt(index!, note);
     } catch (_) {
       throw CacheException();
     }
@@ -50,7 +50,7 @@ class NoteLocalDataSourceImpl extends NoteLocalDataSource {
   @override
   Future<List<Note>> getAllNotes() async {
     try {
-      return hive.values.toList();
+      return hive!.values.toList();
     } catch (_) {
       throw CacheException();
     }

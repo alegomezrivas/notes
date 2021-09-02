@@ -1,5 +1,4 @@
 import 'package:dartz/dartz.dart';
-import 'package:meta/meta.dart';
 import 'package:equatable/equatable.dart';
 import 'package:notas/core/error/failures.dart';
 
@@ -15,7 +14,7 @@ class NoParams extends Equatable {
 class Params extends Equatable {
   final int index;
 
-  Params({@required this.index});
+  Params({required this.index});
 
   @override
   List<Object> get props => [index];

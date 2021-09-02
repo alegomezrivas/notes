@@ -6,10 +6,10 @@ import 'package:notas/features/notes/domain/repositories/note_repository_abstrac
 class DeleteNote implements UseCase<void, Params> {
   DeleteNote(this.repository);
 
-  final NoteRepository repository;
+  final NoteRepository? repository;
 
   @override
   Future<Either<Failure, void>> call(Params params) async {
-    return await repository.deleteNote(params.index);
+    return await repository!.deleteNote(params.index);
   }
 }

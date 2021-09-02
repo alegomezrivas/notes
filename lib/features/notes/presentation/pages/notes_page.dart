@@ -7,18 +7,17 @@ import 'package:notas/features/notes/presentation/widgets/note_build_list_view.d
 import 'package:provider/provider.dart';
 
 class NotePage extends StatefulWidget {
-  const NotePage({Key key}) : super(key: key);
+  const NotePage({Key? key}) : super(key: key);
 
   @override
   _NotePageState createState() => _NotePageState();
 }
 
 class _NotePageState extends State<NotePage> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) async {
       await Provider.of<NoteProvider>(context, listen: false).getAllNotes();
     });
   }
@@ -27,7 +26,6 @@ class _NotePageState extends State<NotePage> {
   Widget build(BuildContext context) {
     final provider = Provider.of<NoteProvider>(context);
     return Scaffold(
-      key: _scaffoldKey,
       backgroundColor: Colors.black,
       appBar: AppBar(
         title: Text(
@@ -37,11 +35,11 @@ class _NotePageState extends State<NotePage> {
         centerTitle: true,
       ),
       body: provider.notes.isNotEmpty
-          ? NoteBuildListView(provider: provider, scaffoldKey: _scaffoldKey)
+          ? NoteBuildListView(provider: provider)
           : EmptyNoteList(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          return Navigator.push(
+          Navigator.push(
             context,
             CupertinoPageRoute(
               builder: (context) => NoteDetailsPage(isNotEmpty: false),
