@@ -32,6 +32,7 @@ Future<void> init() async {
       NotificationChannel(
         channelKey: 'basic_channel',
         channelName: 'Basic Notifications',
+        channelDescription: 'Note added, removed and error notifications',
         defaultColor: accentColor,
         importance: NotificationImportance.High,
         channelShowBadge: true,

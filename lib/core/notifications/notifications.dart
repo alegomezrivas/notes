@@ -31,7 +31,6 @@ Future<void> createNoteNotification(Status status) async {
                 'Ha ocurrido un error al obtener los datos, por favor intente nuevamente',
           );
           break;
-        default:
       }
     }
   });
