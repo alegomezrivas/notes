@@ -24,6 +24,7 @@ Future<void> init() async {
   Hive.init(appDocumentDirectory.path);
   Hive.registerAdapter(NoteAdapter());
   final box = await Hive.openBox<Note>('note');
+  final settings = await Hive.openBox<String>('settings');
 
   //! Notifications
   AwesomeNotifications().initialize(
@@ -71,4 +72,5 @@ Future<void> init() async {
   );
 
   sl.registerLazySingleton<Box<Note>>(() => box);
+  sl.registerLazySingleton<Box<String>>(() => settings);
 }

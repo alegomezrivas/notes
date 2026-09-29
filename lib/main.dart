@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
 import 'package:notas/core/theme/app_theme.dart';
+import 'package:notas/core/theme/theme_provider.dart';
 import 'package:notas/features/notes/domain/repositories/note_repository_abstract.dart';
 import 'package:notas/features/notes/presentation/pages/notes_page.dart';
 import 'package:notas/features/notes/presentation/provider/note_provider.dart';
@@ -14,6 +15,9 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
+        ChangeNotifierProvider(
+          create: (_) => ThemeProvider(box: di.sl<Box<String>>()),
+        ),
         ChangeNotifierProvider(
           create: (_) => NoteProvider(
             repository: di.sl<NoteRepository>(),
@@ -40,7 +44,7 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
-      themeMode: ThemeMode.system,
+      themeMode: context.watch<ThemeProvider>().mode,
       builder: (context, child) {
         final colors = context.colors;
         final isDark = Theme.of(context).brightness == Brightness.dark;

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:notas/core/error/failures.dart';
 import 'package:notas/core/theme/app_theme.dart';
+import 'package:notas/core/theme/theme_provider.dart';
 import 'package:notas/features/notes/domain/entities/note.dart';
 import 'package:notas/features/notes/domain/repositories/note_repository_abstract.dart';
 import 'package:notas/features/notes/presentation/pages/notes_page.dart';
@@ -29,12 +30,25 @@ class FakeRepository implements NoteRepository {
   Future<Either<Failure, List<Note>>> getAllNotes() async => Right(notes);
 }
 
-Widget app(List<Note> notes, {ThemeData? theme}) {
-  return ChangeNotifierProvider(
-    create: (_) => NoteProvider(repository: FakeRepository(notes)),
-    child: MaterialApp(
-      theme: theme ?? AppTheme.dark,
-      home: const NotePage(),
+Widget app(List<Note> notes, {ThemeData? theme, ThemeProvider? themes}) {
+  return MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (_) => themes ?? ThemeProvider()),
+      ChangeNotifierProvider(
+        create: (_) => NoteProvider(repository: FakeRepository(notes)),
+      ),
+    ],
+    child: Builder(
+      builder: (context) => MaterialApp(
+        theme: theme ?? AppTheme.light,
+        darkTheme: AppTheme.dark,
+        themeMode: theme != null
+            ? (theme.brightness == Brightness.dark
+                ? ThemeMode.dark
+                : ThemeMode.light)
+            : context.watch<ThemeProvider>().mode,
+        home: const NotePage(),
+      ),
     ),
   );
 }
@@ -74,4 +88,31 @@ void main() {
       expect(tester.widget<Text>(find.text('Ideas')).style?.color, colors.text);
     });
   }
+
+  testWidgets('theme selector switches between light and dark',
+      (tester) async {
+    final themes = ThemeProvider();
+    await tester.pumpWidget(app([], themes: themes));
+    await tester.pump();
+
+    Color canvas() =>
+        tester.widget<Scaffold>(find.byType(Scaffold)).backgroundColor!;
+
+    // Follows the system (light in the test environment) by default.
+    expect(canvas(), AppColors.light.canvas);
+
+    await tester.tap(find.byTooltip('Tema'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Oscuro'));
+    await tester.pumpAndSettle();
+    expect(themes.mode, ThemeMode.dark);
+    expect(canvas(), AppColors.dark.canvas);
+
+    await tester.tap(find.byTooltip('Tema'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Claro'));
+    await tester.pumpAndSettle();
+    expect(themes.mode, ThemeMode.light);
+    expect(canvas(), AppColors.light.canvas);
+  });
 }

@@ -5,6 +5,7 @@ import 'package:notas/features/notes/presentation/pages/note_details_page.dart';
 import 'package:notas/features/notes/presentation/provider/note_provider.dart';
 import 'package:notas/features/notes/presentation/widgets/empty_list.dart';
 import 'package:notas/features/notes/presentation/widgets/note_build_list_view.dart';
+import 'package:notas/features/notes/presentation/widgets/theme_selector.dart';
 import 'package:provider/provider.dart';
 
 class NotePage extends StatefulWidget {
@@ -35,6 +36,7 @@ class _NotePageState extends State<NotePage> {
           style: TextStyle(color: colors.accent),
         ),
         centerTitle: true,
+        actions: const [ThemeSelector()],
       ),
       body: provider.notes.isNotEmpty
           ? NoteBuildListView(provider: provider)
