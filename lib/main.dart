@@ -43,13 +43,15 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'Notas',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData.dark().copyWith(
+      theme: ThemeData.dark(useMaterial3: false).copyWith(
         primaryColor: Colors.black,
-        accentColor: Colors.amber.shade600,
+        colorScheme: ThemeData.dark().colorScheme.copyWith(
+              secondary: Colors.amber.shade600,
+            ),
       ),
       builder: (context, child) {
         return MediaQuery(
-          data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+          data: MediaQuery.of(context).copyWith(textScaler: TextScaler.noScaling),
           child: child!,
         );
       },

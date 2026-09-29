@@ -2,15 +2,20 @@
 
 An application to save notes on your phone.
 
-## Getting Started
+## Running
 
-This project is a starting point for a Flutter application.
+Requires Flutter 3.x (Dart 3) and, for Android, the Android SDK (Java 17).
 
-A few resources to get you started if this is your first Flutter project:
+```bash
+flutter pub get
+flutter run        # with a device or emulator connected
+flutter test
+```
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+`android/local.properties` is machine-specific and ignored; `flutter pub get` / `flutter run` creates it.
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+If you change `lib/features/notes/domain/entities/note.dart`, regenerate the Hive adapter:
+
+```bash
+dart run build_runner build --delete-conflicting-outputs
+```

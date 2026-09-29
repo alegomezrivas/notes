@@ -17,7 +17,7 @@ class _NotePageState extends State<NotePage> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) async {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       await Provider.of<NoteProvider>(context, listen: false).getAllNotes();
     });
   }
