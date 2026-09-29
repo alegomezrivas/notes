@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:notas/core/theme/app_theme.dart';
 import 'package:notas/features/notes/domain/entities/note.dart';
 import 'package:notas/features/notes/presentation/provider/note_provider.dart';
 import 'package:provider/provider.dart';
@@ -53,8 +54,9 @@ class _NoteDetailsPageState extends State<NoteDetailsPage> {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<NoteProvider>(context);
+    final colors = context.colors;
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: colors.canvas,
       appBar: AppBar(
         leading: GestureDetector(
           onTap: () {
@@ -63,7 +65,7 @@ class _NoteDetailsPageState extends State<NoteDetailsPage> {
           },
           child: Icon(
             Icons.arrow_back_ios,
-            color: Colors.white,
+            color: colors.text,
             size: 20,
           ),
         ),
@@ -79,10 +81,10 @@ class _NoteDetailsPageState extends State<NoteDetailsPage> {
                 TextFormField(
                   enableInteractiveSelection: false,
                   controller: _title,
-                  cursorColor: Colors.amber.shade600,
+                  cursorColor: colors.accent,
                   textCapitalization: TextCapitalization.sentences,
                   style: TextStyle(
-                    color: Colors.white,
+                    color: colors.text,
                     fontWeight: FontWeight.w800,
                     fontSize: 20,
                   ),
@@ -92,7 +94,7 @@ class _NoteDetailsPageState extends State<NoteDetailsPage> {
                       fontWeight: FontWeight.w800,
                       fontSize: 20,
                       letterSpacing: 0.2,
-                      color: Colors.white30,
+                      color: colors.textHint,
                     ),
                   ),
                   textInputAction: TextInputAction.next,
@@ -102,11 +104,11 @@ class _NoteDetailsPageState extends State<NoteDetailsPage> {
                 TextFormField(
                   autofocus: true,
                   controller: _content,
-                  cursorColor: Colors.amber.shade600,
+                  cursorColor: colors.accent,
                   enableInteractiveSelection: false,
                   textCapitalization: TextCapitalization.sentences,
                   style: TextStyle(
-                    color: Colors.white70,
+                    color: colors.textEditor,
                     fontWeight: FontWeight.w800,
                     fontSize: 18,
                   ),

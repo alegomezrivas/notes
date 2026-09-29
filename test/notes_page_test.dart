@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:notas/core/error/failures.dart';
+import 'package:notas/core/theme/app_theme.dart';
 import 'package:notas/features/notes/domain/entities/note.dart';
 import 'package:notas/features/notes/domain/repositories/note_repository_abstract.dart';
 import 'package:notas/features/notes/presentation/pages/notes_page.dart';
@@ -28,11 +29,11 @@ class FakeRepository implements NoteRepository {
   Future<Either<Failure, List<Note>>> getAllNotes() async => Right(notes);
 }
 
-Widget app(List<Note> notes) {
+Widget app(List<Note> notes, {ThemeData? theme}) {
   return ChangeNotifierProvider(
     create: (_) => NoteProvider(repository: FakeRepository(notes)),
     child: MaterialApp(
-      theme: ThemeData.dark(useMaterial3: false),
+      theme: theme ?? AppTheme.dark,
       home: const NotePage(),
     ),
   );
@@ -58,4 +59,19 @@ void main() {
     expect(find.text('Pan y leche'), findsOneWidget);
     expect(find.byType(Image), findsNothing);
   });
+
+  for (final entry in {'light': AppTheme.light, 'dark': AppTheme.dark}.entries) {
+    testWidgets('uses the ${entry.key} canvas and card colors', (tester) async {
+      await tester.pumpWidget(
+        app([Note(title: 'Ideas', content: 'Texto')], theme: entry.value),
+      );
+      await tester.pump();
+
+      final colors = entry.value.extension<AppColors>()!;
+      expect(tester.widget<Scaffold>(find.byType(Scaffold)).backgroundColor,
+          colors.canvas);
+      expect(tester.widget<Card>(find.byType(Card)).color, colors.surface);
+      expect(tester.widget<Text>(find.text('Ideas')).style?.color, colors.text);
+    });
+  }
 }

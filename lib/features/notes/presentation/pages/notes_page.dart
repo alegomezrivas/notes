@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:notas/core/theme/app_theme.dart';
 import 'package:notas/features/notes/presentation/pages/note_details_page.dart';
 import 'package:notas/features/notes/presentation/provider/note_provider.dart';
 import 'package:notas/features/notes/presentation/widgets/empty_list.dart';
@@ -25,12 +26,13 @@ class _NotePageState extends State<NotePage> {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<NoteProvider>(context);
+    final colors = context.colors;
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: colors.canvas,
       appBar: AppBar(
         title: Text(
           'Notas',
-          style: TextStyle(color: Colors.amber.shade600),
+          style: TextStyle(color: colors.accent),
         ),
         centerTitle: true,
       ),
@@ -48,8 +50,8 @@ class _NotePageState extends State<NotePage> {
         },
         elevation: 16.0,
         tooltip: 'New note',
-        child: Icon(Icons.add, color: Colors.white, size: 32),
-        backgroundColor: Colors.amber.shade700,
+        backgroundColor: colors.accentStrong,
+        child: Icon(Icons.add, color: colors.onAccent, size: 32),
       ),
     );
   }

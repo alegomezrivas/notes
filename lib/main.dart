@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
+import 'package:notas/core/theme/app_theme.dart';
 import 'package:notas/features/notes/domain/repositories/note_repository_abstract.dart';
 import 'package:notas/features/notes/presentation/pages/notes_page.dart';
 import 'package:notas/features/notes/presentation/provider/note_provider.dart';
@@ -34,25 +35,26 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-    SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(
-        systemNavigationBarColor: Colors.black,
-        systemNavigationBarIconBrightness: Brightness.light,
-      ),
-    );
     return MaterialApp(
       title: 'Notas',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData.dark(useMaterial3: false).copyWith(
-        primaryColor: Colors.black,
-        colorScheme: ThemeData.dark().colorScheme.copyWith(
-              secondary: Colors.amber.shade600,
-            ),
-      ),
+      theme: AppTheme.light,
+      darkTheme: AppTheme.dark,
+      themeMode: ThemeMode.system,
       builder: (context, child) {
-        return MediaQuery(
-          data: MediaQuery.of(context).copyWith(textScaler: TextScaler.noScaling),
-          child: child!,
+        final colors = context.colors;
+        final isDark = Theme.of(context).brightness == Brightness.dark;
+        return AnnotatedRegion<SystemUiOverlayStyle>(
+          value: SystemUiOverlayStyle(
+            systemNavigationBarColor: colors.canvas,
+            systemNavigationBarIconBrightness:
+                isDark ? Brightness.light : Brightness.dark,
+          ),
+          child: MediaQuery(
+            data: MediaQuery.of(context)
+                .copyWith(textScaler: TextScaler.noScaling),
+            child: child!,
+          ),
         );
       },
       home: NotePage(),

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:notas/core/theme/app_theme.dart';
 import 'package:notas/features/notes/presentation/pages/note_details_page.dart';
 import 'package:notas/features/notes/presentation/provider/note_provider.dart';
 
@@ -9,6 +10,7 @@ class NoteBuildListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     return GridView.builder(
       padding: const EdgeInsets.only(top: 12.0),
       physics: BouncingScrollPhysics(),
@@ -38,7 +40,7 @@ class NoteBuildListView extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16.0),
               ),
-              color: Colors.grey.shade900,
+              color: colors.surface,
               elevation: 4,
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
@@ -52,6 +54,7 @@ class NoteBuildListView extends StatelessWidget {
                         child: Text(
                           note.title!,
                           style: TextStyle(
+                            color: colors.text,
                             fontWeight: FontWeight.w800,
                             fontSize: 18,
                             letterSpacing: 0.8,
@@ -66,7 +69,7 @@ class NoteBuildListView extends StatelessWidget {
                       child: Text(
                         note.content!,
                         style: TextStyle(
-                          color: Colors.grey,
+                          color: colors.textMuted,
                           fontWeight: FontWeight.w800,
                           fontSize: 16,
                           letterSpacing: 0.8,
@@ -82,14 +85,14 @@ class NoteBuildListView extends StatelessWidget {
                         child: GestureDetector(
                           onTap: () {
                             final snackBar = SnackBar(
-                              content: const Text(
+                              content: Text(
                                 '¿Realmente desea eliminar esta nota?',
-                                style: TextStyle(color: Colors.white),
+                                style: TextStyle(color: colors.onSnackbar),
                               ),
-                              backgroundColor: Colors.black54,
+                              backgroundColor: colors.snackbar,
                               action: SnackBarAction(
                                 label: 'Hecho',
-                                textColor: Colors.amber.shade600,
+                                textColor: colors.snackbarAction,
                                 onPressed: () {
                                   // Delete note.
                                   provider.deleteNotes(index);
@@ -103,7 +106,7 @@ class NoteBuildListView extends StatelessWidget {
                           },
                           child: Icon(
                             Icons.delete,
-                            color: Colors.grey.shade800,
+                            color: colors.iconMuted,
                           ),
                         ),
                       ),
